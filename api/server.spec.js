@@ -4,12 +4,27 @@ const server = require("./server")
 
 describe("server.js", function() {
     describe("GET /", function() {
-      it("should return 200 OK", function() {
-        request(server)
-          .get("/")
-          .expect(200)
+      it("should return 200 OK", async function() {
+        return request(server)
+        .get("/")
+        .then(response =>
+          expect(response.status).toBe(200)
+        )
       });
-      it.todo("should return JSON");
-      it.todo('should respond with { api: "up" }');
+      it("should return JSON", function() {
+        return request(server)
+        .get("/")
+        .then(res => {
+          expect(res.type).toMatch(/json/i)
+        })
+      });
+
+      it('should respond with { api: "up" }', function () {
+        return request(server)
+        .get("/")
+        .then(res => {
+          expect(res.body.api).toBe("up");
+        })
+      });
     });
   });
